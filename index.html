@@ -18,23 +18,45 @@
             <h1 id="messages">Original header</h1>
         </div>
     </div>
+    
     <form>
         <input type = "radio" name = "degrees" id = "Celsius">Celsius
         <input type = "radio" name = "degrees" id = "Fahrenheit">Fahrenheit
     </form>
+    
     <div id="myDiv" style="width:900px;height:450px;"></div>
     
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
+    
     <form action="">
       <input id="n" autocomplete="off" /><button>Send</button>
     </form>
+    
+    <h3 id="numLabel">Phone Number:</h3>
+    <p>Must be in format +13193616270</p>
+    <form action="">
+        <input id="phoneNumber" autocomplete="off" />
+    </form>
+    
+    <h3 id="topValLabel">Max Value</h3>
+    <form action="">
+        <input id="topValue" autocomplete="off"/>
+    </form>
+    
+    <h3 id="minValLabel">Min Value</h3>
+    <form action="">
+        <input = id="minValue" autocomplete="off"/>
+    </form>
+    
     <script>
       
       var socket = io.connect();        
       
-      var phone_number = '+13193616270';
+      var phone_number = document.getElementById('phoneNumber').value;
+      var maxVal = document.getElementById('topValue').value;
+      var minVal = document.getElementById('minValue').value;
       
       var y1 = [],
           x1 = [];              
@@ -67,7 +89,11 @@
         socket.emit('chat message', data);
         $('#m').val('');
         $('#n').val('');
-        socket.emit('textNow', data[1], phone_number);
+        var phone_number = document.getElementById('phoneNumber').value;
+        var maxVal = document.getElementById('topValue').value;
+        var minVal = document.getElementById('minValue').value;
+      
+        socket.emit('textNow', data[1], phone_number, maxVal, minVal);
         return false;
       });
       

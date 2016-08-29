@@ -12,14 +12,34 @@ io.on('connection', function(socket){
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
   });
-  socket.on('textNow', function(temp, phone_number){
+  socket.on('textNow', function(temp, phone_number, maxVal, minVal){
       console.log('in textNow');
       console.log('temp: ' + temp + ' num: ' + phone_number);
-      //client.sendSms({
-      //    to: phone_number,
-      //    from: '+13194096407',
-     //     body: temp + ' degrees C'
-     // });
+      console.log('minVal: ' + minVal + ' maxVal: ' + maxVal);
+      
+      if(temp < minVal)
+      {
+          console.log('in < minVal');
+          client.sendSms({
+              to: phone_number,
+              from: '+13194096407',
+              body: temp + ' degrees C is less than min Val'
+          });
+      } else if(temp > maxVal){
+         console.log('in > maxVal');
+         client.sendSms({
+              to: phone_number,
+              from: '+13194096407',
+              body: temp + ' degrees C is more than Val'
+          }); 
+      } else {
+          console.log('inrange');
+          client.sendSms({
+              to: phone_number,
+              from: '+13194096407',
+              body: temp + ' degrees C is in range'
+          });
+      }
   });
 });
 
