@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+
+    </script>
+  </head>
+  <body>
+    <div class = "jumbotron">
+        <div class = "container text-center">
+            <h1 id="messages">Original header</h1>
+        </div>
+    </div>
+    <form>
+        <input type = "radio" name = "degrees" id = "Celsius">Celsius
+        <input type = "radio" name = "degrees" id = "Fahrenheit">Fahrenheit
+    </form>
+    <div id="myDiv" style="width:900px;height:450px;"></div>
+    
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+    <form action="">
+      <input id="n" autocomplete="off" /><button>Send</button>
+    </form>
+    <script>
+      
+      var socket = io.connect();        
+      
+      var phone_number = '+13193616270';
+      
+      var y1 = [],
+          x1 = [];              
+        
+      var data = [
+      {
+        x:x1,
+        y:y1,
+        type: 'scatter'
+      }];
+
+      var layout = {
+        title: 'Temperature',
+        xaxis: {
+            title: 'time ago (ms)',
+            showticklabels: true,
+            range:[300,0]
+        },
+        yaxis: {
+            title: 'Temperature (C)',
+            showticklabels: true,
+            range: [10,50]
+        }
+      };
+          
+      Plotly.newPlot('myDiv',data,layout);
+      
+      $('form').submit(function(){
+        var data = [$('#m').val(), $('#n').val()]; 
+        socket.emit('chat message', data);
+        $('#m').val('');
+        $('#n').val('');
+        socket.emit('textNow', data[1], phone_number);
+        return false;
+      });
+      
+      socket.on('chat message', function(msg){
+        if(document.getElementById('Fahrenheit').checked){
+            var F = (msg[1]*9/5) + 32;
+            console.log(F);
+            $('#messages').html(F);
+        }
+        else{
+            $('#messages').html(msg[1]);
+        }
+        
+        y1.push(msg[1]);
+        if(y1.length > 10){
+            var i = y1.shift();
+        }
+        x1.push(msg[0]);
+        if(x1.length > 10){
+            var i = x1.shift();
+        }
+        Plotly.redraw('myDiv', data, layout);
+      });
+    </script>
+  </body>
+</html>
