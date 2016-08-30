@@ -20,25 +20,25 @@ io.on('connection', function(socket){
       if(temp < minVal)
       {
           console.log('in < minVal');
-          client.sendSms({
-              to: phone_number,
-              from: '+13194096407',
-              body: temp + ' degrees C is less than min Val'
-          });
+          // client.sendSms({
+              // to: phone_number,
+              // from: '+13194096407',
+              // body: temp + ' degrees C is less than min Val'
+          // });
       } else if(temp > maxVal){
          console.log('in > maxVal');
-         client.sendSms({
-              to: phone_number,
-              from: '+13194096407',
-              body: temp + ' degrees C is more than Val'
-          }); 
+         // client.sendSms({
+              // to: phone_number,
+              // from: '+13194096407',
+              // body: temp + ' degrees C is more than Val'
+          // }); 
       } else {
           console.log('inrange');
-          client.sendSms({
-              to: phone_number,
-              from: '+13194096407',
-              body: temp + ' degrees C is in range'
-          });
+          // client.sendSms({
+              // to: phone_number,
+              // from: '+13194096407',
+              // body: temp + ' degrees C is in range'
+          // });
       }
   });
 });

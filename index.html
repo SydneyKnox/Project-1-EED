@@ -3,53 +3,79 @@
   <head>
     <title>Socket.IO chat</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
 
     </script>
   </head>
-  <body>
-    <div class = "jumbotron">
+  <body style="background-color:powderblue;">
+    <div class = "jumbotron" style="padding-bottom:0px; background-color:powderblue;">
         <div class = "container text-center">
             <h1 id="messages">Original header</h1>
         </div>
+    <form class= "container text-center">
+        <label class="radio-inline" style="font-size: 16px;">
+          <input id = 'Celsius' type="radio" name="optradio">Celsius
+        </label>
+        <label class="radio-inline" style="font-size: 16px;">
+          <input id='Fahrenheit' type="radio" name="optradio">Fahrenheit
+        </label>
+    </form>
+    </div>
+   
+    <div class="well">
+        <center>
+            <div id="myDiv" style="width:700px;height:350px;"></div>
+        </center>
     </div>
     
-    <form>
-        <input type = "radio" name = "degrees" id = "Celsius">Celsius
-        <input type = "radio" name = "degrees" id = "Fahrenheit">Fahrenheit
-    </form>
+    <div class="row" style="padding-bottom:20px;">
+        <form action="" class="col-sm-6 container text-center" style="padding-right:20px; border-right: 1px solid #ccc;">
+          <input id="m" autocomplete="off" /><button>Send</button>
+        </form>
+        
+        <form action="" class="col-sm-6 container text-center">
+          <input id="n" autocomplete="off" /><button>Send</button>
+        </form>
+    </div>
     
-    <div id="myDiv" style="width:900px;height:450px;"></div>
-    
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
-    
-    <form action="">
-      <input id="n" autocomplete="off" /><button>Send</button>
-    </form>
-    
-    <h3 id="numLabel">Phone Number:</h3>
-    <p>Must be in format +13193616270</p>
-    <form action="">
-        <input id="phoneNumber" autocomplete="off" value = "+13193616270"/>
-    </form>
-    
-    <h3 id="topValLabel">Max Value</h3>
-    <form action="">
-        <input id="topValue" autocomplete="off" value="50"/>
-    </form>
-    
-    <h3 id="minValLabel">Min Value</h3>
-    <form action="">
-        <input = id="minValue" autocomplete="off" value = "10"/>
-    </form>
-    
+    <div class="row">
+        <div class="col-sm-4 container text-center" style="padding-right:20px; border-right: 1px solid #3d3d3d;">
+            <h3 id="numLabel">Phone Number:</h3>
+            <p>Must be in format +13193616270</p>
+        </div>
+        
+        <div class="col-sm-4 container text-center" style="padding-right:20px; border-right: 1px solid #3d3d3d;">
+            <h3 id="topValLabel">Max Value</h3><br>
+        </div>
+        
+        <div class="col-sm-4 container text-center">
+            <h3 id="minValLabel">Min Value</h3><br>
+        </div>
+    </div>
+    <div class="row" style="padding-bottom:20px;">
+        <div class="col-sm-4 container text-center" style="padding-right:20px; border-right: 1px solid #3d3d3d;">
+            <form action="">
+                <input id="phoneNumber" autocomplete="off" value = "+13193616270"/>
+            </form>
+        </div>
+        
+        <div class="col-sm-4 container text-center" style="padding-right:20px; border-right: 1px solid #3d3d3d;">
+            <form action="">
+                <input id="topValue" autocomplete="off" value="50"/>
+            </form>
+        </div>
+        
+        <div class="col-sm-4 container text-center">
+            <form action="">
+                <input = id="minValue" autocomplete="off" value = "10"/>
+            </form>
+        </div>
+    </div>
     <script>
       
       var socket = io.connect();        
