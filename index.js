@@ -10,6 +10,41 @@ var http = require('http');
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 var client = require('twilio')('ACdf8fc40465838045551ebf9fe50c26e7', '0afe043f0a0d55fc7d4f627cd170d996');
+var SerialPort = require('serialport');
+var sf= require('sf');
+
+// SerialPort.list(function(err,results){
+    // if(err){
+        // throw err;
+    // }
+    
+    // for(var i=0; i<results.length;i++){
+        // var item=results[i];
+        // console.log(sf('{comName,-15}{pnpId,-20}{manufacturer}',item));
+    // }
+// });
+
+var port = new SerialPort('COM3', {
+    baudRate: 57600
+    //change baud rate determined by arduino
+});
+
+SerialPort.list(function(err, ports){
+    console.log("in ports");
+    ports.forEach(function(port){
+        console.log(port.comName);
+        console.log(port.pnpId);
+        console.log(port.manufacturer);
+    });
+});
+
+port.on('error', function(err){
+    console.log('Error: ', err.message);
+});
+
+port.on('data', function(data) {
+    console.log('Data: ' + data);
+});
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
