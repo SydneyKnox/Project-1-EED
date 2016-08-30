@@ -1,3 +1,10 @@
+/*********************************************************************************************************************
+* These sites provided examples from which the basic setup of this system is set up.
+* http://socket.io/get-started/chat/
+* https://www.twilio.com/blog/2013/08/verify-phone-numbers-with-node-js-using-twilio-sms-express-and-socket-io.html
+* https://www.twilio.com/docs/libraries/node 
+*********************************************************************************************************************/
+
 var app = require('express')();
 var http = require('http');
 var server = http.createServer(app);
