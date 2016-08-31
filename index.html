@@ -15,7 +15,10 @@
   <body style="background-color:powderblue;">
     <div class = "jumbotron" style="padding-bottom:0px; background-color:powderblue;">
         <div class = "container text-center">
-            <h1 id="messages">Original header</h1>
+            <h1 id="messages">Original header</h1><br>
+        </div>
+        <div class = "container text-center">
+            <button id="LEDbtn" class="btn btn-info">Turn off LEDs</button>
         </div>
     <form class= "container text-center">
         <label class="radio-inline" style="font-size: 16px;">
@@ -121,6 +124,21 @@
       
         socket.emit('textNow', data[1], phone_number, maxVal, minVal);
         return false;
+      });
+      
+      $('#LEDbtn').click(function(){
+        var LEDsOn = document.getElementById('LEDbtn').textContent;
+        console.log(LEDsOn);
+        if(LEDsOn === "Turn off LEDs"){
+            $('#messages').html("Box is off");
+            $('#LEDbtn').html("Turn on LEDs");
+            socket.emit('turnOffBox');
+        }
+        else{
+            $('#messages').html(0);
+            $('#LEDbtn').html('Turn off LEDs');
+            socket.emit('turnOnBox');
+        }
       });
       
       socket.on('chat message', function(msg){
